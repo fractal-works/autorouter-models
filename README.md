@@ -4,6 +4,44 @@ Prices, context windows and roles for the AI models [AutoRouter](https://autorou
 
 AutoRouter is a Mac app that puts these models in Codex and Claude Code and picks the right one for each task: [autorouter.com](https://autorouter.com).
 
+## Models
+
+USD per million tokens, input / output. "On a plan" is AutoRouter's assumed price when a Claude or ChatGPT plan covers the model. The nightly build rewrites this table from `models.json`.
+
+<!-- models:start -->
+| Model | Maker | Context | List price | On a plan |
+| --- | --- | --- | --- | --- |
+| Claude Fable 5.2 | Anthropic | 1M | $8 / $40 | $0.721 / $3.6 |
+| GPT-6.2 Astra | OpenAI | 1.05M | $8 / $40 | $0.769 / $3.85 |
+| Claude Opus 5.5 | Anthropic | 1M | $4 / $20 | $0.0699 / $0.35 |
+| GPT-5.6 Sol | OpenAI | 1.05M | $4 / $20 | $0.385 / $1.92 |
+| Claude Sonnet 5.5 | Anthropic | 1M | $2 / $10 | $0.0338 / $0.169 |
+| Gemini 4 Carbon | Google | 1.05M | $2 / $10 | — |
+| GPT-6 Sol | OpenAI | 1.05M | $2 / $10 | $0.154 / $0.769 |
+| GPT-6.2 Sol | OpenAI | 1.05M | $2 / $10 | $0.192 / $0.962 |
+| Kimi K3.1 Pro | Moonshot AI | 1M | $2 / $10 | — |
+| Grok 4.7 | xAI | 500K | $2 / $6 | — |
+| GPT-6.1 Terra | OpenAI | 1.05M | $1 / $5 | $0.0961 / $0.481 |
+| Hy4 | Tencent | 1.05M | $0.417 / $1.25 | — |
+| GPT-5.6 Luna | OpenAI | 1.05M | $0.2 / $1.2 | $0.0192 / $0.115 |
+| MiniMax M3.1 Flash | MiniMax | 1.05M | $0.15 / $0.6 | — |
+| Claude Haiku 5.5 | Anthropic | 1M | $0.1 / $0.5 | $0.00901 / $0.045 |
+| GPT-6 Luna | OpenAI | 1.05M | $0.1 / $0.5 | $0.00962 / $0.0481 |
+| Muse Ember | Meta | 1.05M | $0.1 / $0.5 | — |
+| Crouton Alpha | Unnamed | — | — | — |
+| DeepSeek V4.1 Flash 1017 | DeepSeek | 1M | — | — |
+| Gemini 4 Argon | Google | 1.05M | — | — |
+| Gemini 4 Hydrogen | Google | 1M | — | — |
+| GLM 5.3 | Z.ai | 1.05M | — | — |
+| GLM 5.3 Flash | Z.ai | 1M | — | — |
+| MiMo-V2.6-Flash | Xiaomi | 1.05M | — | — |
+| MiMo-V2.6-Pro | Xiaomi | 1.05M | — | — |
+| Muse Spark 1.3 | Meta | 1.05M | — | — |
+| Muse Spark Open | Meta | 1.05M | — | — |
+| Muse Wonder | Meta | 1.05M | — | — |
+| Qwen4 Max | Alibaba | 1M | — | — |
+<!-- models:end -->
+
 ## Use it
 
 Raw file:

@@ -21,6 +21,7 @@ const MCP_URL = "https://api.autorouter.com/v1/mcp/public";
 const PRICES_URL = "https://autorouter.com/calculator.js";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/models";
 const target = new URL("../models.json", import.meta.url);
+const readme = new URL("../README.md", import.meta.url);
 const VALUE = JSON.parse(
   await readFile(new URL("../data/subscription-value.json", import.meta.url), "utf8"),
 );
@@ -62,6 +63,7 @@ async function main() {
     await readFile(target, "utf8").catch(() => '{"models":[]}'),
   );
   await writeFile(target, `${JSON.stringify(data, null, 2)}\n`);
+  await writeFile(readme, withTable(await readFile(readme, "utf8"), models));
   for (const line of changes(previous.models, models)) console.log(line);
 }
 
@@ -206,6 +208,51 @@ function openRouterMatch(vendor, slug, openrouter) {
   return (
     openrouter.get(`${prefix}/${slug}`) ?? openrouter.get(`${prefix}/${dotted}`)
   );
+}
+
+/**
+ * README with the models table between its markers replaced, so the table
+ * ships with every data change. Most expensive first; unpriced models last.
+ */
+function withTable(text, models) {
+  const rows = [...models]
+    .sort(
+      (a, b) =>
+        (b.price?.output ?? -1) - (a.price?.output ?? -1) ||
+        a.name.localeCompare(b.name),
+    )
+    .map((model) =>
+      [
+        model.name,
+        model.maker ?? model.vendor,
+        tokens(model.contextWindow),
+        rate(model.price),
+        rate(model.subscription),
+      ].join(" | "),
+    );
+  const table = [
+    "| Model | Maker | Context | List price | On a plan |",
+    "| --- | --- | --- | --- | --- |",
+    ...rows.map((row) => `| ${row} |`),
+  ].join("\n");
+  if (!/<!-- models:start -->[\s\S]*<!-- models:end -->/.test(text))
+    throw new Error("README.md: models table markers not found");
+  return text.replace(
+    /<!-- models:start -->[\s\S]*<!-- models:end -->/,
+    `<!-- models:start -->\n${table}\n<!-- models:end -->`,
+  );
+}
+
+function tokens(count) {
+  if (!count) return "—";
+  return count >= 1e6
+    ? `${+(count / 1e6).toFixed(2)}M`
+    : `${Math.round(count / 1e3)}K`;
+}
+
+function rate(price) {
+  const usd = (value) => `$${+value.toPrecision(3)}`;
+  return price ? `${usd(price.input)} / ${usd(price.output)}` : "—";
 }
 
 /** Release-note lines: each added, removed or changed model id. */

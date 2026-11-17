@@ -53,7 +53,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add models.json package.json package-lock.json CHANGELOG.md
+          git add models.json README.md package.json package-lock.json CHANGELOG.md
           git commit -m "Update models ${tag}"
           git push
           if [ "$release" = true ]; then
