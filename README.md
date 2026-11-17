@@ -1,4 +1,4 @@
-# @autorouter/models
+# @auto.router/models
 
 Prices, context windows and roles for the AI models [AutoRouter](https://autorouter.com) adds to Codex and Claude Code, as one JSON file. Rebuilt every night; a dated release is cut each day the data changes.
 
@@ -15,11 +15,11 @@ https://raw.githubusercontent.com/fractal-works/autorouter-models/main/models.js
 From npm:
 
 ```sh
-npm install @autorouter/models
+npm install @auto.router/models
 ```
 
 ```js
-import { models } from "@autorouter/models";
+import { models } from "@auto.router/models";
 
 const opus = models.find((model) => model.id === "anthropic/claude-opus-5-5");
 console.log(opus.price.input, opus.price.output); // 4 20
@@ -28,8 +28,8 @@ console.log(opus.price.input, opus.price.output); // 4 20
 From the command line:
 
 ```sh
-npx @autorouter/models          # the whole file
-npx @autorouter/models opus     # models whose id or name matches
+npx @auto.router/models          # the whole file
+npx @auto.router/models opus     # models whose id or name matches
 ```
 
 ## Fields

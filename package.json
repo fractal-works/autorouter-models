@@ -1,5 +1,5 @@
 {
-  "name": "@autorouter/models",
+  "name": "@auto.router/models",
   "version": "2026.11.17",
   "description": "AI model prices, context windows and roles, as JSON. From AutoRouter.",
   "private": false,
@@ -10,7 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/fractal-works/autorouter-models.git"
   },
-  "keywords": ["llm", "ai", "models", "pricing", "context-window", "tokens"],
+  "keywords": [
+    "llm",
+    "ai",
+    "models",
+    "pricing",
+    "context-window",
+    "tokens"
+  ],
   "exports": {
     ".": {
       "types": "./index.d.ts",
@@ -20,9 +27,19 @@
     "./schema.json": "./schema.json"
   },
   "types": "./index.d.ts",
-  "bin": { "autorouter-models": "./cli.js" },
-  "files": ["index.js", "index.d.ts", "cli.js", "models.json", "schema.json"],
-  "engines": { "node": ">=20.10" },
+  "bin": {
+    "autorouter-models": "cli.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "cli.js",
+    "models.json",
+    "schema.json"
+  ],
+  "engines": {
+    "node": ">=20.10"
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test"
