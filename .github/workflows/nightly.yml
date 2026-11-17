@@ -1,0 +1,57 @@
+# Rebuilds models.json each night. When the data changed, commits it, bumps
+# the package version to the day's date and cuts a GitHub release with that tag.
+name: Nightly
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: node scripts/build.mjs | tee changes.txt
+      - run: npm test
+      - name: Release when the data changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- models.json; then
+            echo "No data changes."
+            exit 0
+          fi
+          tag=$(date -u +%Y.%-m.%-d)
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
+            # One release a day; a second change today ships in tomorrow's.
+            echo "Release $tag exists; committing without a new release."
+            release=false
+          else
+            release=true
+            npm version "$tag" --no-git-tag-version --allow-same-version
+            { echo "## $tag"; echo; cat changes.txt; echo; tail -n +3 CHANGELOG.md; } > CHANGELOG.next
+            { head -n 1 CHANGELOG.md; echo; cat CHANGELOG.next; } > CHANGELOG.md
+            rm CHANGELOG.next
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add models.json package.json package-lock.json CHANGELOG.md
+          git commit -m "Update models ${tag}"
+          git push
+          if [ "$release" = true ]; then
+            gh release create "$tag" --target "$(git rev-parse HEAD)" --title "$tag" --notes-file changes.txt
+          fi
