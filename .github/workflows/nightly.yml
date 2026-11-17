@@ -1,5 +1,6 @@
 # Rebuilds models.json each night. When the data changed, commits it, bumps
-# the package version to the day's date and cuts a GitHub release with that tag.
+# the package version to the day's date, cuts a GitHub release with that tag
+# and publishes it to npm through trusted publishing (OIDC, no token).
 name: Nightly
 
 on:
@@ -9,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 concurrency:
   group: nightly
@@ -23,6 +25,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm 11.5.1 or later; Node 22 ships npm 10.
+      - run: npm install -g npm@11
       - run: npm ci
       - name: Build
         run: node scripts/build.mjs | tee changes.txt
@@ -53,4 +58,5 @@ jobs:
           git push
           if [ "$release" = true ]; then
             gh release create "$tag" --target "$(git rev-parse HEAD)" --title "$tag" --notes-file changes.txt
+            npm publish --access public
           fi
