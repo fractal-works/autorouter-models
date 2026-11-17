@@ -43,9 +43,8 @@ jobs:
           else
             release=true
             npm version "$tag" --no-git-tag-version --allow-same-version
-            { echo "## $tag"; echo; cat changes.txt; echo; tail -n +3 CHANGELOG.md; } > CHANGELOG.next
-            { head -n 1 CHANGELOG.md; echo; cat CHANGELOG.next; } > CHANGELOG.md
-            rm CHANGELOG.next
+            { head -n 1 CHANGELOG.md; echo; echo "## $tag"; echo; cat changes.txt; echo; tail -n +3 CHANGELOG.md; } > CHANGELOG.next
+            mv CHANGELOG.next CHANGELOG.md
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
