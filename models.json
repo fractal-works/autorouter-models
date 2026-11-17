@@ -666,7 +666,7 @@
       "maker": "Z.ai",
       "role": "Cheap structured extraction, counts and checklists.",
       "contextWindow": 1000000,
-      "maxOutput": 131072,
+      "maxOutput": 943717,
       "modalities": {
         "input": [
           "image",
