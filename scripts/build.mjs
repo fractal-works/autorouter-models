@@ -228,11 +228,12 @@ function withTable(text, models) {
         tokens(model.contextWindow),
         rate(model.price),
         rate(model.subscription),
+        multiple(model.subscription),
       ].join(" | "),
     );
   const table = [
-    "| Model | Maker | Context | List price | On a plan |",
-    "| --- | --- | --- | --- | --- |",
+    "| Model | Maker | Context | List price | On a plan | Plan value |",
+    "| --- | --- | --- | --- | --- | --- |",
     ...rows.map((row) => `| ${row} |`),
   ].join("\n");
   if (!/<!-- models:start -->[\s\S]*<!-- models:end -->/.test(text))
@@ -248,6 +249,12 @@ function tokens(count) {
   return count >= 1e6
     ? `${+(count / 1e6).toFixed(2)}M`
     : `${Math.round(count / 1e3)}K`;
+}
+
+/** `57.2x`, or `10.4x*` when the vendor's least generous multiple stands in. */
+function multiple(subscription) {
+  if (!subscription) return "—";
+  return `${subscription.multiple}x${subscription.measured ? "" : "*"}`;
 }
 
 function rate(price) {
