@@ -3,11 +3,22 @@
   "$id": "https://github.com/fractal-works/autorouter-models/schema.json",
   "title": "AutoRouter models",
   "type": "object",
-  "required": ["description", "sources", "models"],
+  "required": ["description", "units", "sources", "subscriptionValue", "models"],
   "additionalProperties": false,
   "properties": {
     "$schema": { "type": "string" },
     "description": { "type": "string" },
+    "units": { "type": "object", "additionalProperties": { "type": "string" } },
+    "subscriptionValue": {
+      "type": "object",
+      "required": ["measured", "workload", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "measured": { "type": "string", "format": "date" },
+        "workload": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
     "sources": {
       "type": "object",
       "additionalProperties": { "type": "string", "format": "uri" }
@@ -21,7 +32,7 @@
   "$defs": {
     "model": {
       "type": "object",
-      "required": ["id", "name", "vendor", "maker", "role", "contextWindow", "maxOutput", "modalities", "price"],
+      "required": ["id", "name", "vendor", "maker", "role", "contextWindow", "maxOutput", "modalities", "price", "subscription"],
       "additionalProperties": false,
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z0-9-]+/[a-z0-9][a-z0-9.-]*$" },
@@ -69,6 +80,25 @@
                 },
                 "source": { "type": "string", "format": "uri" },
                 "checked": { "type": ["string", "null"], "format": "date" }
+              }
+            }
+          ]
+        },
+        "subscription": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["multiple", "measured", "plans", "allowanceCap", "input", "cachedInput", "output"],
+              "additionalProperties": false,
+              "properties": {
+                "multiple": { "type": "number", "exclusiveMinimum": 1 },
+                "measured": { "type": "boolean" },
+                "plans": { "type": ["array", "null"], "items": { "type": "string" } },
+                "allowanceCap": { "type": ["number", "null"], "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+                "input": { "$ref": "#/$defs/usd" },
+                "cachedInput": { "$ref": "#/$defs/usd" },
+                "output": { "$ref": "#/$defs/usd" }
               }
             }
           ]

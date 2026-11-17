@@ -1,0 +1,15 @@
+{
+  "measured": "2026-11-10",
+  "source": "https://newsletter.semianalysis.com/p/anthropic-subscriptions-offer-5x",
+  "workload": "agentic: 0.4% uncached input, 96.6% cache read, 2.6% cache write, 0.3% output",
+  "note": "multiple = a plan's API-priced value per month divided by its monthly fee, for the lowest current tier of each model. Claude Fable 5.2 postdates the article; AutoRouter measured it from a Max 20x account's rate-limit headers (plausible range 10.3x-13.5x), and its allowance cap is carried over from Fable 5.1.",
+  "entries": [
+    { "model": "anthropic/claude-sonnet-5-5", "plans": ["pro", "max_5x", "max_20x"], "multiple": 59.2 },
+    { "model": "anthropic/claude-opus-5-5", "plans": ["pro", "max_5x", "max_20x"], "multiple": 57.2 },
+    { "model": "anthropic/claude-fable-5-1", "plans": ["max_5x", "max_20x"], "multiple": 12.4, "allowanceCap": 0.5 },
+    { "model": "anthropic/claude-fable-5-2", "plans": ["max_5x", "max_20x"], "multiple": 11.1, "allowanceCap": 0.5 },
+    { "model": "openai/gpt-6-astra", "plans": ["pro_100", "pro_200", "pro_500"], "multiple": 13.2 },
+    { "model": "openai/gpt-6.1-sol", "plans": ["plus", "pro_100", "pro_200", "pro_500"], "multiple": 10.4 },
+    { "model": "openai/gpt-6-sol", "plans": ["plus", "pro_100", "pro_200", "pro_500"], "multiple": 13 }
+  ]
+}

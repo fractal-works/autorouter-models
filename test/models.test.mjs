@@ -23,3 +23,11 @@ test("ids are unique and prices are in input, cached, output order", () => {
     }
   }
 });
+
+test("subscription prices sit below list prices", () => {
+  for (const { id, price, subscription } of models) {
+    if (!subscription) continue;
+    assert.ok(price, `${id} has a subscription price but no list price`);
+    assert.ok(subscription.output < price.output, `${id} subscription not cheaper`);
+  }
+});

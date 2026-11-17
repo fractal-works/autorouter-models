@@ -47,8 +47,13 @@ Each entry in `models`:
 | `maxOutput`     | Largest response in tokens                                                               |
 | `modalities`    | `input` and `output` types, such as `text` and `image`                                   |
 | `price`         | List price in USD per million tokens, or `null` when no public price is known            |
+| `subscription`  | AutoRouter's assumed price on a Claude or ChatGPT plan, USD per million tokens, or `null` |
 
 `price` has `input`, `cachedInput` (cache reads) and `output`, plus `source` (where the price was read) and `checked` (the day it was last checked, when known). `longContext`, when present, replaces the rate for prompts over `above` tokens.
+
+`subscription` is `price` divided by `multiple`: a plan's API-priced value per month over its fee, from [SemiAnalysis](https://newsletter.semianalysis.com/p/anthropic-subscriptions-offer-5x) (lowest current tier, agentic workload). `measured: false` means the model has no measurement of its own and gets its vendor's least generous multiple, the way AutoRouter's router prices it. `allowanceCap` is the share of the plan this model may use, when capped.
+
+Units: every price is USD per 1,000,000 tokens; `contextWindow` and `maxOutput` are tokens. The file's `units` field says the same.
 
 Any field without public evidence is `null`. `schema.json` is the JSON Schema for the file.
 

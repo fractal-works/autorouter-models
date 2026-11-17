@@ -5,6 +5,8 @@
  * - autorouter.com's calculator script for AutoRouter's published list
  *   prices, kept only for models whose price has a named public source.
  * - OpenRouter's public models API for max output and modalities.
+ * - data/subscription-value.json, AutoRouter's assumed API-equivalent value of
+ *   Claude and ChatGPT plans, kept by hand from the router's reviewed table.
  * Prints one line per added, removed or changed model, so the nightly job
  * can write release notes. Exits non-zero rather than write a partial file.
  */
@@ -19,6 +21,9 @@ const MCP_URL = "https://api.autorouter.com/v1/mcp/public";
 const PRICES_URL = "https://autorouter.com/calculator.js";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/models";
 const target = new URL("../models.json", import.meta.url);
+const VALUE = JSON.parse(
+  await readFile(new URL("../data/subscription-value.json", import.meta.url), "utf8"),
+);
 
 /** Fetches every source, then writes models.json and prints its changes. */
 async function main() {
@@ -33,11 +38,23 @@ async function main() {
   const data = {
     $schema: "./schema.json",
     description:
-      "AI models AutoRouter adds to Codex and Claude Code: list prices in USD per million tokens, context windows and roles. https://autorouter.com/models",
+      "AI models AutoRouter adds to Codex and Claude Code: list prices, assumed prices on a Claude or ChatGPT plan, context windows and roles. https://autorouter.com/models",
+    units: {
+      price: "USD per 1,000,000 tokens",
+      subscription: "USD per 1,000,000 tokens, list price divided by the plan's value multiple",
+      contextWindow: "tokens",
+      maxOutput: "tokens",
+    },
     sources: {
       models: MCP_URL,
       prices: "https://autorouter.com/models",
       limits: OPENROUTER_URL,
+      subscription: VALUE.source,
+    },
+    subscriptionValue: {
+      measured: VALUE.measured,
+      workload: VALUE.workload,
+      note: VALUE.note,
     },
     models,
   };
@@ -148,7 +165,35 @@ function entry(model, prices, openrouter) {
         }
       : null,
     price: price ? { ...price, ...source } : null,
+    subscription: price ? subscription(model.id, vendor, price) : null,
   };
+}
+
+/**
+ * The list price divided by the plan's value multiple, as AutoRouter's router
+ * assumes it. Mirrors the router: a model without its own measurement gets its
+ * vendor's least generous measured multiple. Only Claude and ChatGPT plans are
+ * measured; other vendors get null.
+ */
+function subscription(id, vendor, price) {
+  const exact = VALUE.entries.find((entry) => entry.model === id);
+  const ofVendor = VALUE.entries.filter((entry) => entry.model.startsWith(`${vendor}/`));
+  if (!exact && !ofVendor.length) return null;
+  const multiple = exact?.multiple ?? Math.min(...ofVendor.map((entry) => entry.multiple));
+  return {
+    multiple,
+    measured: Boolean(exact),
+    plans: exact?.plans ?? null,
+    allowanceCap: exact?.allowanceCap ?? null,
+    input: scale(price.input, multiple),
+    cachedInput: scale(price.cachedInput, multiple),
+    output: scale(price.output, multiple),
+  };
+}
+
+/** Four significant digits, like the router's covered rates. */
+function scale(value, multiple) {
+  return Number((value / multiple).toPrecision(4));
 }
 
 /**

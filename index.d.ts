@@ -22,10 +22,26 @@ export type Model = {
         checked: string | null;
       })
     | null;
+  /**
+   * AutoRouter's assumed price on a Claude or ChatGPT plan: `price` divided by
+   * the plan's value multiple. Null when no plan for the vendor is measured.
+   */
+  subscription:
+    | (Rate & {
+        multiple: number;
+        /** False when the vendor's least generous measured multiple stands in. */
+        measured: boolean;
+        plans: string[] | null;
+        /** Share of the plan's allowance this model may use, when capped. */
+        allowanceCap: number | null;
+      })
+    | null;
 };
 
 export type Dataset = {
   description: string;
+  units: Record<string, string>;
+  subscriptionValue: { measured: string; workload: string; note: string };
   sources: Record<string, string>;
   models: Model[];
 };
