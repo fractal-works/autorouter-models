@@ -58,5 +58,13 @@ jobs:
           git push
           if [ "$release" = true ]; then
             gh release create "$tag" --target "$(git rev-parse HEAD)" --title "$tag" --notes-file changes.txt
+          fi
+      # Separate from the release so a failed publish retries on the next run.
+      - name: Publish to npm when npm lacks this version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if npm view "@auto.router/models@$version" version >/dev/null 2>&1; then
+            echo "npm already has $version."
+          else
             npm publish --access public
           fi
