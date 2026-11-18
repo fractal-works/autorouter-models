@@ -1,10 +1,22 @@
 {
   "$schema": "./schema.json",
-  "description": "AI models AutoRouter adds to Codex and Claude Code: list prices in USD per million tokens, context windows and roles. https://autorouter.com/models",
+  "description": "AI models AutoRouter adds to Codex and Claude Code: list prices, assumed prices on a Claude or ChatGPT plan, context windows and roles. https://autorouter.com/models",
+  "units": {
+    "price": "USD per 1,000,000 tokens",
+    "subscription": "USD per 1,000,000 tokens, list price divided by the plan's value multiple",
+    "contextWindow": "tokens",
+    "maxOutput": "tokens"
+  },
   "sources": {
     "models": "https://api.autorouter.com/v1/mcp/public",
     "prices": "https://autorouter.com/models",
-    "limits": "https://openrouter.ai/api/v1/models"
+    "limits": "https://openrouter.ai/api/v1/models",
+    "subscription": "https://newsletter.semianalysis.com/p/anthropic-subscriptions-offer-5x"
+  },
+  "subscriptionValue": {
+    "measured": "2026-11-10",
+    "workload": "agentic: 0.4% uncached input, 96.6% cache read, 2.6% cache write, 0.3% output",
+    "note": "multiple = a plan's API-priced value per month divided by its monthly fee, for the lowest current tier of each model. Claude Fable 5.2 postdates the article; AutoRouter measured it from a Max 20x account's rate-limit headers (plausible range 10.3x-13.5x), and its allowance cap is carried over from Fable 5.1."
   },
   "models": [
     {
@@ -31,6 +43,18 @@
         "output": 40,
         "source": "https://platform.claude.com/docs/en/about-claude/pricing",
         "checked": "2026-11-09"
+      },
+      "subscription": {
+        "multiple": 11.1,
+        "measured": true,
+        "plans": [
+          "max_5x",
+          "max_20x"
+        ],
+        "allowanceCap": 0.5,
+        "input": 0.7207,
+        "cachedInput": 0.01802,
+        "output": 3.604
       }
     },
     {
@@ -63,6 +87,15 @@
         },
         "source": "https://platform.claude.com/docs/en/about-claude/pricing",
         "checked": "2026-11-09"
+      },
+      "subscription": {
+        "multiple": 11.1,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.009009,
+        "cachedInput": 0.0009009,
+        "output": 0.04505
       }
     },
     {
@@ -89,6 +122,19 @@
         "output": 20,
         "source": "https://platform.claude.com/docs/en/about-claude/pricing",
         "checked": "2026-11-09"
+      },
+      "subscription": {
+        "multiple": 57.2,
+        "measured": true,
+        "plans": [
+          "pro",
+          "max_5x",
+          "max_20x"
+        ],
+        "allowanceCap": null,
+        "input": 0.06993,
+        "cachedInput": 0.003497,
+        "output": 0.3497
       }
     },
     {
@@ -115,6 +161,19 @@
         "output": 10,
         "source": "https://platform.claude.com/docs/en/about-claude/pricing",
         "checked": "2026-11-09"
+      },
+      "subscription": {
+        "multiple": 59.2,
+        "measured": true,
+        "plans": [
+          "pro",
+          "max_5x",
+          "max_20x"
+        ],
+        "allowanceCap": null,
+        "input": 0.03378,
+        "cachedInput": 0.001689,
+        "output": 0.1689
       }
     },
     {
@@ -134,7 +193,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "google/gemini-4-argon",
@@ -156,7 +216,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "google/gemini-4-carbon",
@@ -184,7 +245,8 @@
         "output": 10,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
-      }
+      },
+      "subscription": null
     },
     {
       "id": "google/gemini-4-hydrogen",
@@ -206,7 +268,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "meta/muse-ember",
@@ -234,7 +297,8 @@
         "output": 0.5,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
-      }
+      },
+      "subscription": null
     },
     {
       "id": "meta/muse-spark-1.3",
@@ -255,7 +319,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "meta/muse-spark-open",
@@ -277,7 +342,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "meta/muse-wonder",
@@ -299,7 +365,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "minimax/minimax-m3.1-flash",
@@ -325,7 +392,8 @@
         "output": 0.6,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
-      }
+      },
+      "subscription": null
     },
     {
       "id": "moonshot/kimi-k3.1-pro",
@@ -351,7 +419,8 @@
         "output": 10,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
-      }
+      },
+      "subscription": null
     },
     {
       "id": "openai/gpt-5.6-luna",
@@ -377,6 +446,15 @@
         "output": 1.2,
         "source": "https://openai.com/api/pricing",
         "checked": null
+      },
+      "subscription": {
+        "multiple": 10.4,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.01923,
+        "cachedInput": 0.001923,
+        "output": 0.1154
       }
     },
     {
@@ -403,6 +481,15 @@
         "output": 20,
         "source": "https://openai.com/api/pricing",
         "checked": null
+      },
+      "subscription": {
+        "multiple": 10.4,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.3846,
+        "cachedInput": 0.03846,
+        "output": 1.923
       }
     },
     {
@@ -429,6 +516,15 @@
         "output": 0.5,
         "source": "https://openai.com/api/pricing",
         "checked": null
+      },
+      "subscription": {
+        "multiple": 10.4,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.009615,
+        "cachedInput": 0.0009615,
+        "output": 0.04808
       }
     },
     {
@@ -455,6 +551,20 @@
         "output": 10,
         "source": "https://openai.com/api/pricing",
         "checked": null
+      },
+      "subscription": {
+        "multiple": 13,
+        "measured": true,
+        "plans": [
+          "plus",
+          "pro_100",
+          "pro_200",
+          "pro_500"
+        ],
+        "allowanceCap": null,
+        "input": 0.1538,
+        "cachedInput": 0.01538,
+        "output": 0.7692
       }
     },
     {
@@ -481,6 +591,15 @@
         "output": 5,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
+      },
+      "subscription": {
+        "multiple": 10.4,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.09615,
+        "cachedInput": 0.004808,
+        "output": 0.4808
       }
     },
     {
@@ -507,6 +626,15 @@
         "output": 40,
         "source": "https://openai.com/api/pricing",
         "checked": "2026-11-17"
+      },
+      "subscription": {
+        "multiple": 10.4,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.7692,
+        "cachedInput": 0.03846,
+        "output": 3.846
       }
     },
     {
@@ -533,6 +661,15 @@
         "output": 10,
         "source": "https://openai.com/api/pricing",
         "checked": "2026-11-17"
+      },
+      "subscription": {
+        "multiple": 10.4,
+        "measured": false,
+        "plans": null,
+        "allowanceCap": null,
+        "input": 0.1923,
+        "cachedInput": 0.009615,
+        "output": 0.9615
       }
     },
     {
@@ -553,7 +690,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "stealth/crouton-alpha",
@@ -564,7 +702,8 @@
       "contextWindow": null,
       "maxOutput": null,
       "modalities": null,
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "tencent/hy4",
@@ -589,7 +728,8 @@
         "output": 1.2505,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
-      }
+      },
+      "subscription": null
     },
     {
       "id": "xai/grok-4.7",
@@ -615,7 +755,8 @@
         "output": 6,
         "source": "https://openrouter.ai/api/v1/models",
         "checked": "2026-11-11"
-      }
+      },
+      "subscription": null
     },
     {
       "id": "xiaomi/mimo-v2.6-flash",
@@ -636,7 +777,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "xiaomi/mimo-v2.6-pro",
@@ -657,7 +799,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "zai/glm-5.3-flash",
@@ -666,7 +809,7 @@
       "maker": "Z.ai",
       "role": "Cheap structured extraction, counts and checklists.",
       "contextWindow": 1000000,
-      "maxOutput": 943717,
+      "maxOutput": 131072,
       "modalities": {
         "input": [
           "image",
@@ -677,7 +820,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     },
     {
       "id": "zai/glm-5p3",
@@ -695,7 +839,8 @@
           "text"
         ]
       },
-      "price": null
+      "price": null,
+      "subscription": null
     }
   ]
 }
