@@ -4,7 +4,8 @@
  *   roles and context windows.
  * - autorouter.com's calculator script for AutoRouter's published list
  *   prices, kept only for models whose price has a named public source.
- * - OpenRouter's public models API for max output and modalities.
+ * - models.dev (MIT) for max output and modalities: the vendor's own entry,
+ *   else models.dev's OpenRouter entry for the model.
  * - data/subscription-value.json, AutoRouter's assumed API-equivalent value of
  *   Claude and ChatGPT plans, kept by hand from the router's reviewed table.
  * Prints one line per added, removed or changed model, so the nightly job
@@ -20,6 +21,7 @@ import { readFile, writeFile } from "node:fs/promises";
 const MCP_URL = "https://api.autorouter.com/v1/mcp/public";
 const PRICES_URL = "https://autorouter.com/calculator.js";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/models";
+const MODELS_DEV_URL = "https://models.dev/api.json";
 const target = new URL("../models.json", import.meta.url);
 const readme = new URL("../README.md", import.meta.url);
 const VALUE = JSON.parse(
@@ -28,13 +30,13 @@ const VALUE = JSON.parse(
 
 /** Fetches every source, then writes models.json and prints its changes. */
 async function main() {
-  const [listed, prices, openrouter] = await Promise.all([
+  const [listed, prices, catalog] = await Promise.all([
     listModels(),
     listPrices(),
-    openRouterModels(),
+    modelsDev(),
   ]);
   const models = listed
-    .map((model) => entry(model, prices, openrouter))
+    .map((model) => entry(model, prices, catalog))
     .sort((a, b) => a.id.localeCompare(b.id));
   const data = {
     $schema: "./schema.json",
@@ -49,7 +51,7 @@ async function main() {
     sources: {
       models: MCP_URL,
       prices: "https://autorouter.com/models",
-      limits: OPENROUTER_URL,
+      limits: MODELS_DEV_URL,
       subscription: VALUE.source,
     },
     subscriptionValue: {
@@ -137,21 +139,23 @@ async function listPrices() {
   return prices;
 }
 
-/** OpenRouter's public model list, by id. */
-async function openRouterModels() {
-  const response = await fetch(OPENROUTER_URL);
+/** models.dev's catalog: providers, each with its models by id. */
+async function modelsDev() {
+  const response = await fetch(MODELS_DEV_URL);
   if (!response.ok)
-    throw new Error(`${OPENROUTER_URL}: HTTP ${response.status}`);
-  const { data } = await response.json();
-  return new Map(data.map((model) => [model.id, model]));
+    throw new Error(`${MODELS_DEV_URL}: HTTP ${response.status}`);
+  const catalog = await response.json();
+  if (!catalog.anthropic?.models || !catalog.openrouter?.models)
+    throw new Error(`${MODELS_DEV_URL}: unexpected shape`);
+  return catalog;
 }
 
 /** One dataset entry. Fields with no public evidence are null. */
-function entry(model, prices, openrouter) {
+function entry(model, prices, catalog) {
   const [vendor, slug] = model.id.split("/");
   const source = PRICE_SOURCES[slug];
   const price = source && prices.get(slug);
-  const limits = openRouterMatch(vendor, slug, openrouter);
+  const limits = modelsDevMatch(vendor, slug, catalog);
   return {
     id: model.id,
     name: model.name,
@@ -159,11 +163,11 @@ function entry(model, prices, openrouter) {
     maker: MAKERS[vendor] ?? null,
     role: model.role ?? null,
     contextWindow: model.contextWindow ?? null,
-    maxOutput: limits?.top_provider?.max_completion_tokens ?? null,
-    modalities: limits
+    maxOutput: limits?.limit?.output ?? null,
+    modalities: limits?.modalities
       ? {
-          input: [...limits.architecture.input_modalities].sort(),
-          output: [...limits.architecture.output_modalities].sort(),
+          input: [...limits.modalities.input].sort(),
+          output: [...limits.modalities.output].sort(),
         }
       : null,
     price: price ? { ...price, ...source } : null,
@@ -199,14 +203,20 @@ function scale(value, multiple) {
 }
 
 /**
- * The OpenRouter entry for an AutoRouter id. OpenRouter spells some vendors
- * and versions differently: `moonshotai`, `claude-opus-5.5`, `glm-5.3`.
+ * The models.dev entry for an AutoRouter id: the vendor's own provider first,
+ * else models.dev's OpenRouter provider. Both spell some vendors and versions
+ * differently: `moonshotai`, `x-ai`, `glm-5.3` for `glm-5p3`.
  */
-function openRouterMatch(vendor, slug, openrouter) {
-  const prefix = OPENROUTER_VENDORS[vendor] ?? vendor;
+function modelsDevMatch(vendor, slug, catalog) {
   const dotted = slug.replace(/(\d)[-p](\d)$/, "$1.$2");
+  const own = catalog[MODELS_DEV_VENDORS[vendor] ?? vendor]?.models;
+  const prefix = OPENROUTER_VENDORS[vendor] ?? vendor;
+  const routed = catalog.openrouter.models;
   return (
-    openrouter.get(`${prefix}/${slug}`) ?? openrouter.get(`${prefix}/${dotted}`)
+    own?.[slug] ??
+    own?.[dotted] ??
+    routed[`${prefix}/${slug}`] ??
+    routed[`${prefix}/${dotted}`]
   );
 }
 
@@ -329,6 +339,7 @@ const MAKERS = {
   stealth: "Unnamed",
 };
 
+const MODELS_DEV_VENDORS = { moonshot: "moonshotai", qwen: "alibaba" };
 const OPENROUTER_VENDORS = { moonshot: "moonshotai", xai: "x-ai", zai: "z-ai" };
 
 // Called last: the tables above are consts, not hoisted.

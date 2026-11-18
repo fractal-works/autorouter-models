@@ -42,23 +42,20 @@ jobs:
           fi
           tag=$(date -u +%Y.%-m.%-d)
           if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
-            # One release a day; a second change today ships in tomorrow's.
-            echo "Release $tag exists; committing without a new release."
-            release=false
-          else
-            release=true
-            npm version "$tag" --no-git-tag-version --allow-same-version
-            { head -n 1 CHANGELOG.md; echo; echo "## $tag"; echo; cat changes.txt; echo; tail -n +3 CHANGELOG.md; } > CHANGELOG.next
-            mv CHANGELOG.next CHANGELOG.md
+            # One release a day. Commit nothing, so the next run still sees the
+            # change and ships it in its own release.
+            echo "Release $tag exists; the change ships in the next day's release."
+            exit 0
           fi
+          npm version "$tag" --no-git-tag-version --allow-same-version
+          { head -n 1 CHANGELOG.md; echo; echo "## $tag"; echo; cat changes.txt; echo; tail -n +3 CHANGELOG.md; } > CHANGELOG.next
+          mv CHANGELOG.next CHANGELOG.md
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add models.json README.md package.json package-lock.json CHANGELOG.md
           git commit -m "Update models ${tag}"
           git push
-          if [ "$release" = true ]; then
-            gh release create "$tag" --target "$(git rev-parse HEAD)" --title "$tag" --notes-file changes.txt
-          fi
+          gh release create "$tag" --target "$(git rev-parse HEAD)" --title "$tag" --notes-file changes.txt
       # Separate from the release so a failed publish retries on the next run.
       - name: Publish to npm when npm lacks this version
         run: |

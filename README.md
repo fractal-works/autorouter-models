@@ -99,7 +99,8 @@ Any field without public evidence is `null`. `schema.json` is the JSON Schema fo
 
 - Model list, names, roles and context windows: AutoRouter's public model list (`list_models` on `https://api.autorouter.com/v1/mcp/public`, no account needed).
 - Prices: AutoRouter's published list prices, the ones on [autorouter.com/models](https://autorouter.com/models). A price ships only when it comes from a public list (the vendor's own pricing page or OpenRouter's public API). Other gateway rates are left out, so some models have `price: null`.
-- Max output and modalities: [OpenRouter's public models API](https://openrouter.ai/api/v1/models).
+- Max output and modalities: [models.dev](https://models.dev) (MIT), from the vendor's own entry or, failing that, its OpenRouter entry.
+- Plan value multiples: [SemiAnalysis](https://newsletter.semianalysis.com/p/anthropic-subscriptions-offer-5x), in `data/subscription-value.json`.
 
 To rebuild locally:
 
