@@ -32,6 +32,7 @@ USD per million tokens, input / output. "On a plan" is AutoRouter's assumed pric
 | DeepSeek V4.1 Flash 1017 | DeepSeek | 1M | — | — | — |
 | Gemini 4 Argon | Google | 1.05M | — | — | — |
 | Gemini 4 Hydrogen | Google | 1M | — | — | — |
+| Gemini 4 Neon | Google | 1M | — | — | — |
 | GLM 5.3 | Z.ai | 1.05M | — | — | — |
 | GLM 5.3 Flash | Z.ai | 1M | — | — | — |
 | MiMo-V2.6-Flash | Xiaomi | 1.05M | — | — | — |

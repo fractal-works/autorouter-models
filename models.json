@@ -10,7 +10,7 @@
   "sources": {
     "models": "https://api.autorouter.com/v1/mcp/public",
     "prices": "https://autorouter.com/models",
-    "limits": "https://openrouter.ai/api/v1/models",
+    "limits": "https://models.dev/api.json",
     "subscription": "https://newsletter.semianalysis.com/p/anthropic-subscriptions-offer-5x"
   },
   "subscriptionValue": {
@@ -29,8 +29,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -67,8 +67,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -108,8 +108,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -147,8 +147,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -183,7 +183,7 @@
       "maker": "DeepSeek",
       "role": "Bounded, well-specified code changes that are easy to verify.",
       "contextWindow": 1000000,
-      "maxOutput": 943718,
+      "maxOutput": 393216,
       "modalities": {
         "input": [
           "image",
@@ -203,12 +203,12 @@
       "maker": "Google",
       "role": "Earlier Gemini 4 model, kept alongside Carbon and Hydrogen.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 32768,
       "modalities": {
         "input": [
           "audio",
-          "file",
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -226,12 +226,12 @@
       "maker": "Google",
       "role": "Sustained agentic engineering and complex coding.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 32768,
       "modalities": {
         "input": [
           "audio",
-          "file",
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -255,12 +255,35 @@
       "maker": "Google",
       "role": "Fast, lower-cost everyday coding and agentic work.",
       "contextWindow": 1000000,
-      "maxOutput": 943718,
+      "maxOutput": 65536,
       "modalities": {
         "input": [
           "audio",
-          "file",
           "image",
+          "pdf",
+          "text",
+          "video"
+        ],
+        "output": [
+          "text"
+        ]
+      },
+      "price": null,
+      "subscription": null
+    },
+    {
+      "id": "google/gemini-4-neon",
+      "name": "Gemini 4 Neon",
+      "vendor": "google",
+      "maker": "Google",
+      "role": "Coding and agentic work near Carbon's level, using fewer tokens.",
+      "contextWindow": 1000000,
+      "maxOutput": 65536,
+      "modalities": {
+        "input": [
+          "audio",
+          "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -282,8 +305,8 @@
       "modalities": {
         "input": [
           "audio",
-          "file",
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -307,11 +330,12 @@
       "maker": "Meta",
       "role": "Metered choice for medium tasks when no subscription has allowance.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 131072,
       "modalities": {
         "input": [
-          "file",
+          "audio",
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -333,8 +357,8 @@
       "modalities": {
         "input": [
           "audio",
-          "file",
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -356,8 +380,8 @@
       "modalities": {
         "input": [
           "audio",
-          "file",
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -402,7 +426,7 @@
       "maker": "Moonshot AI",
       "role": "Open-weight reasoning and coding across long supplied documents.",
       "contextWindow": 1000000,
-      "maxOutput": 943718,
+      "maxOutput": 1048576,
       "modalities": {
         "input": [
           "image",
@@ -432,8 +456,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -467,8 +491,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -502,8 +526,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -537,8 +561,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -577,8 +601,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -612,8 +636,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -647,8 +671,8 @@
       "maxOutput": 128000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -738,11 +762,11 @@
       "maker": "xAI",
       "role": "A second opinion when you ask for one.",
       "contextWindow": 500000,
-      "maxOutput": 450000,
+      "maxOutput": 500000,
       "modalities": {
         "input": [
-          "file",
           "image",
+          "pdf",
           "text"
         ],
         "output": [
@@ -813,6 +837,7 @@
       "modalities": {
         "input": [
           "image",
+          "pdf",
           "text",
           "video"
         ],
@@ -830,7 +855,7 @@
       "maker": "Z.ai",
       "role": "Higher-capability open-weight coding.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 131072,
       "modalities": {
         "input": [
           "text"
