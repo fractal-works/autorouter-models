@@ -75,28 +75,8 @@
           "text"
         ]
       },
-      "price": {
-        "input": 0.1,
-        "cachedInput": 0.01,
-        "output": 0.5,
-        "longContext": {
-          "above": 100000,
-          "input": 0.5,
-          "cachedInput": 0.05,
-          "output": 2.5
-        },
-        "source": "https://platform.claude.com/docs/en/about-claude/pricing",
-        "checked": "2026-11-09"
-      },
-      "subscription": {
-        "multiple": 11.1,
-        "measured": false,
-        "plans": null,
-        "allowanceCap": null,
-        "input": 0.009009,
-        "cachedInput": 0.0009009,
-        "output": 0.04505
-      }
+      "price": null,
+      "subscription": null
     },
     {
       "id": "anthropic/claude-opus-5-5",
@@ -182,8 +162,8 @@
       "vendor": "deepseek",
       "maker": "DeepSeek",
       "role": "Bounded, well-specified code changes that are easy to verify.",
-      "contextWindow": 1000000,
-      "maxOutput": 393216,
+      "contextWindow": 1048576,
+      "maxOutput": 943718,
       "modalities": {
         "input": [
           "image",
@@ -832,7 +812,7 @@
       "vendor": "zai",
       "maker": "Z.ai",
       "role": "Cheap structured extraction, counts and checklists.",
-      "contextWindow": 1000000,
+      "contextWindow": 1048576,
       "maxOutput": 131072,
       "modalities": {
         "input": [

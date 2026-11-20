@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.11.20
+
+- Updated anthropic/claude-haiku-5-5
+- Updated deepseek/deepseek-v4.1-flash-1017
+- Updated zai/glm-5.3-flash
+
 ## 2026.11.19
 
 - Added google/gemini-4-neon

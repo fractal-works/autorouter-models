@@ -25,16 +25,16 @@ USD per million tokens, input / output. "On a plan" is AutoRouter's assumed pric
 | Hy4 | Tencent | 1.05M | $0.417 / $1.25 | — | — |
 | GPT-5.6 Luna | OpenAI | 1.05M | $0.2 / $1.2 | $0.0192 / $0.115 | 10.4x* |
 | MiniMax M3.1 Flash | MiniMax | 1.05M | $0.15 / $0.6 | — | — |
-| Claude Haiku 5.5 | Anthropic | 1M | $0.1 / $0.5 | $0.00901 / $0.045 | 11.1x* |
 | GPT-6 Luna | OpenAI | 1.05M | $0.1 / $0.5 | $0.00962 / $0.0481 | 10.4x* |
 | Muse Ember | Meta | 1.05M | $0.1 / $0.5 | — | — |
+| Claude Haiku 5.5 | Anthropic | 1M | — | — | — |
 | Crouton Alpha | Unnamed | — | — | — | — |
-| DeepSeek V4.1 Flash 1017 | DeepSeek | 1M | — | — | — |
+| DeepSeek V4.1 Flash 1017 | DeepSeek | 1.05M | — | — | — |
 | Gemini 4 Argon | Google | 1.05M | — | — | — |
 | Gemini 4 Hydrogen | Google | 1M | — | — | — |
 | Gemini 4 Neon | Google | 1M | — | — | — |
 | GLM 5.3 | Z.ai | 1.05M | — | — | — |
-| GLM 5.3 Flash | Z.ai | 1M | — | — | — |
+| GLM 5.3 Flash | Z.ai | 1.05M | — | — | — |
 | MiMo-V2.6-Flash | Xiaomi | 1.05M | — | — | — |
 | MiMo-V2.6-Pro | Xiaomi | 1.05M | — | — | — |
 | Muse Spark 1.3 | Meta | 1.05M | — | — | — |
