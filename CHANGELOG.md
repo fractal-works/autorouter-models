@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.11.21
+
+- Updated minimax/minimax-m3.1-flash
+
 ## 2026.11.20
 
 - Updated anthropic/claude-haiku-5-5

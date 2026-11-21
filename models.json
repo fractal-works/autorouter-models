@@ -379,7 +379,7 @@
       "maker": "MiniMax",
       "role": "Low-cost open-weight option for easy tasks.",
       "contextWindow": 1048576,
-      "maxOutput": 524288,
+      "maxOutput": 512000,
       "modalities": {
         "input": [
           "image",
