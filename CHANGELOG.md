@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026.11.22
+
+- Updated deepseek/deepseek-v4.1-flash-1017
+
 ## 2026.11.21
 
 - Updated minimax/minimax-m3.1-flash

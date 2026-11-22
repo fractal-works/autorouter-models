@@ -163,7 +163,7 @@
       "maker": "DeepSeek",
       "role": "Bounded, well-specified code changes that are easy to verify.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 393216,
       "modalities": {
         "input": [
           "image",
