@@ -281,7 +281,7 @@
       "maker": "Meta",
       "role": "Low-cost reasoning for agent sub-tasks and bounded coding.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 524288,
       "modalities": {
         "input": [
           "audio",
@@ -333,7 +333,7 @@
       "maker": "Meta",
       "role": "Meta's open-weight Muse, served through Ramp.",
       "contextWindow": 1048544,
-      "maxOutput": 943718,
+      "maxOutput": 131072,
       "modalities": {
         "input": [
           "audio",
@@ -356,7 +356,7 @@
       "maker": "Meta",
       "role": "Meta's frontier model; priced above Gemini 4 Argon.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 131072,
       "modalities": {
         "input": [
           "audio",
@@ -379,7 +379,7 @@
       "maker": "MiniMax",
       "role": "Low-cost open-weight option for easy tasks.",
       "contextWindow": 1048576,
-      "maxOutput": 943718,
+      "maxOutput": 131072,
       "modalities": {
         "input": [
           "image",
@@ -683,10 +683,11 @@
       "maker": "Alibaba",
       "role": "Lower-cost long-context coding and document analysis.",
       "contextWindow": 1000000,
-      "maxOutput": 131072,
+      "maxOutput": 262144,
       "modalities": {
         "input": [
           "image",
+          "pdf",
           "text",
           "video"
         ],

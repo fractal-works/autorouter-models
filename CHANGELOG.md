@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026.11.25
+
+- Updated meta/muse-ember
+- Updated meta/muse-spark-open
+- Updated meta/muse-wonder
+- Updated minimax/minimax-m3.1-flash
+- Updated qwen/qwen4-max
+
 ## 2026.11.24
 
 - Updated minimax/minimax-m3.1-flash

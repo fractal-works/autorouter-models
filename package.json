@@ -1,6 +1,6 @@
 {
   "name": "@auto.router/models",
-  "version": "2026.11.24",
+  "version": "2026.11.25",
   "description": "AI model prices, context windows and roles, as JSON. From AutoRouter.",
   "private": false,
   "type": "module",
